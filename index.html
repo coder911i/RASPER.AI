@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResPar — Solution Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0d0f;
+  --ink2: #1a1a1f;
+  --ink3: #26262e;
+  --muted: #6b6b7a;
+  --subtle: #3a3a45;
+  --line: rgba(255,255,255,0.08);
+  --white: #ffffff;
+  --lime: #c8f542;
+  --lime2: #a8d930;
+  --coral: #ff5c4a;
+  --amber: #ffb347;
+  --blue: #4a9eff;
+  --card: #16161c;
+  --card2: #1e1e26;
+  --purple: #a78bfa;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ink);
+  color: var(--white);
+  line-height: 1.7;
+}
+
+/* ── GRID BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+/* ── COVER ── */
+.cover {
+  text-align: center;
+  padding: 4rem 0 5rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(200,245,66,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card2);
+  border: 1px solid var(--line);
+  border-radius: 50px;
+  padding: 6px 16px 6px 8px;
+  margin-bottom: 2.5rem;
+}
+
+.logo-icon {
+  width: 28px; height: 28px;
+  background: var(--lime);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.logo-icon svg { width: 16px; height: 16px; }
+
+.logo-label {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--white);
+}
+
+.logo-label span { color: var(--lime); }
+
+.cover-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.cover-title .accent { color: var(--lime); }
+
+.cover-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.meta-pill .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+
+.dot-lime   { background: var(--lime); }
+.dot-blue   { background: var(--blue); }
+.dot-amber  { background: var(--amber); }
+.dot-purple { background: var(--purple); }
+
+/* ── QUICK LINKS ── */
+.links-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.link-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.link-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.link-card.lime::before  { background: rgba(200,245,66,0.04); }
+.link-card.blue::before  { background: rgba(74,158,255,0.04); }
+
+.link-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
+.link-card:hover::before { opacity: 1; }
+
+.link-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+
+.link-icon.lime { background: rgba(200,245,66,0.12); }
+.link-icon.blue { background: rgba(74,158,255,0.12); }
+
+.link-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--white);
+}
+
+.link-url {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.link-arrow {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--subtle);
+  transition: color 0.2s;
+}
+
+.link-card:hover .link-arrow { color: var(--lime); }
+
+/* ── SECTIONS ── */
+.section {
+  margin-bottom: 3.5rem;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.section-num {
+  width: 24px; height: 24px;
+  background: var(--lime);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.7rem;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+
+.prose {
+  font-size: 0.925rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.75;
+}
+
+.prose p + p { margin-top: 0.9rem; }
+
+.prose strong { color: var(--white); font-weight: 500; }
+
+.prose a {
+  color: var(--lime);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(200,245,66,0.3);
+}
+
+.prose a:hover { border-color: var(--lime); }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--line);
+  margin: 3rem 0;
+}
+
+/* ── FEATURE GRID ── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  margin-top: 1.25rem;
+}
+
+.feature-cell {
+  background: var(--card);
+  padding: 1.25rem 1.5rem;
+}
+
+.feature-cell:hover { background: var(--card2); }
+
+.feature-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.feature-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── FLOW DIAGRAM ── */
+.flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+
+.flow-step {
+  flex: 1;
+  min-width: 110px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.flow-step + .flow-step { margin-left: 2rem; }
+
+.flow-step + .flow-step::before {
+  content: '→';
+  position: absolute;
+  left: -1.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--lime);
+  font-size: 0.9rem;
+}
+
+.flow-icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.flow-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.flow-sub {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* ── CODE BLOCK ── */
+.code-block {
+  background: var(--ink2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.code-block pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.code-block .cm { color: #6b7280; }
+.code-block .kw { color: var(--blue); }
+.code-block .fn { color: var(--lime); }
+.code-block .st { color: var(--amber); }
+.code-block .nm { color: var(--purple); }
+
+/* ── STEP LIST ── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  margin-top: 1.25rem;
+}
+
+.step-row {
+  background: var(--card);
+  padding: 1rem 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.step-num {
+  width: 22px; height: 22px;
+  background: var(--ink3);
+  border: 1px solid var(--subtle);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-row.done .step-num {
+  background: rgba(200,245,66,0.15);
+  border-color: rgba(200,245,66,0.3);
+  color: var(--lime);
+}
+
+.step-content {}
+
+.step-heading {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.step-body {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── TECH STACK ── */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.stack-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.stack-layer {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.stack-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.stack-detail {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight {
+  background: rgba(200,245,66,0.06);
+  border: 1px solid rgba(200,245,66,0.2);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.7;
+}
+
+.highlight strong { color: var(--lime); }
+
+/* ── BUILT BY ── */
+.builder-card {
+  background: var(--card2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.builder-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lime), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.builder-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.builder-role {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+.footer {
+  border-top: 1px solid var(--line);
+  margin-top: 4rem;
+  padding-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--white);
+}
+
+.footer-brand span { color: var(--lime); }
+
+.footer-note {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .links-section { grid-template-columns: 1fr; }
+  .feature-grid  { grid-template-columns: 1fr; }
+  .stack-grid    { grid-template-columns: 1fr 1fr; }
+  .flow          { flex-direction: column; }
+  .flow-step + .flow-step { margin-left: 0; margin-top: 2rem; }
+  .flow-step + .flow-step::before { content: '↓'; left: 50%; top: -1.4rem; transform: translateX(-50%); }
+  .builder-card  { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ── COVER ── -->
+  <div class="cover">
+    <div class="logo-badge">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0d0d0f" stroke-width="2.5" stroke-linecap="round">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <div class="logo-label">Res<span>Par</span></div>
+    </div>
+
+    <h1 class="cover-title">AI-Powered<br><span class="accent">Resume Parser</span><br>Solution Report</h1>
+    <p class="cover-sub">A complete technical and functional overview of the ResPar system — built, deployed, and documented by Tanishq.</p>
+
+    <div class="meta-row">
+      <div class="meta-pill"><div class="dot dot-lime"></div> v1.0 — Live</div>
+      <div class="meta-pill"><div class="dot dot-blue"></div> Google Apps Script</div>
+      <div class="meta-pill"><div class="dot dot-amber"></div> Groq AI · Llama 3.1</div>
+      <div class="meta-pill"><div class="dot dot-purple"></div> March 2026</div>
+    </div>
+  </div>
+
+  <!-- ── QUICK ACCESS LINKS ── -->
+  <div class="links-section">
+    <a class="link-card lime" href="https://docs.google.com/spreadsheets/d/1c7_ONIkRK--ne5VCIHNYfoqpr9TNWonuutLAfd173vs/edit?usp=sharing" target="_blank">
+      <div class="link-icon lime">📊</div>
+      <div>
+        <div class="link-title">Google Spreadsheet</div>
+        <div class="link-url">docs.google.com/spreadsheets/d/1c7_ONIkRK--ne5VCI...</div>
+      </div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a class="link-card blue" href="https://script.google.com/macros/s/AKfycbx2WvZiCUzzrxWRf3LuL7M3cgVCbe-aJP-8rVbVBH2ycsx9-l778uNMlmWelzP4u2yJVQ/exec" target="_blank">
+      <div class="link-icon blue">🌐</div>
+      <div>
+        <div class="link-title">ResPar Dashboard</div>
+        <div class="link-url">script.google.com/macros/s/AKfycbx2.../exec</div>
+      </div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a class="link-card blue" href="https://script.google.com/macros/s/AKfycbx2WvZiCUzzrxWRf3LuL7M3cgVCbe-aJP-8rVbVBH2ycsx9-l778uNMlmWelzP4u2yJVQ/exec?page=report" target="_blank">
+      <div class="link-icon blue">📄</div>
+      <div>
+        <div class="link-title">Solution Report Page</div>
+        <div class="link-url">script.google.com/macros/s/AKfycbx2.../exec?page=report</div>
+      </div>
+      <div class="link-arrow">↗</div>
+    </a>
+  </div>
+
+  <!-- ── SECTION 1: WHAT IS RESPAR ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">1</div>
+      <div class="section-title">What is ResPar?</div>
+    </div>
+    <div class="prose">
+      <p>ResPar (Resume Parser) is an <strong>AI-powered recruitment automation system</strong> built entirely on Google's free infrastructure. It automatically processes job applications submitted via Google Forms, extracts resume content from Google Drive, runs AI analysis against job descriptions, and displays ranked results on a live web dashboard — all without any paid hosting or servers.</p>
+      <p>The system is designed for small HR teams or solo recruiters who receive resumes via Google Forms and want instant AI scoring without expensive ATS software. Everything lives inside Google Sheets, Google Drive, and Google Apps Script.</p>
+    </div>
+
+    <div class="highlight">
+      <strong>Zero cost to run.</strong> Uses Groq's free tier (14,400 requests/day), Google Apps Script (free), and Google Sheets (free). No AWS, no databases, no monthly fees.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 2: HOW IT WORKS ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">2</div>
+      <div class="section-title">How It Works — End to End</div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-icon">📝</div>
+        <div class="flow-label">Form Submit</div>
+        <div class="flow-sub">Candidate fills Google Form with name, email, resume link, JD choice</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">⚡</div>
+        <div class="flow-label">Trigger Fires</div>
+        <div class="flow-sub">onFormSubmit() runs automatically via Apps Script trigger</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">📄</div>
+        <div class="flow-label">Resume Read</div>
+        <div class="flow-sub">4-method fallback extracts text from Google Drive file</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">🤖</div>
+        <div class="flow-label">AI Analysis</div>
+        <div class="flow-sub">Groq (Llama 3.1) scores resume vs JD and returns JSON</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">💾</div>
+        <div class="flow-label">Save & Alert</div>
+        <div class="flow-sub">Results saved to sheet, email sent if score ≥ 80%</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-icon">📊</div>
+        <div class="flow-label">Dashboard</div>
+        <div class="flow-sub">Live web app shows ranked candidates, auto-refreshes every 15s</div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:1.5rem;">
+      <p>The system uses a <strong>4-method resume extraction fallback chain</strong>: it first tries Google Doc text export via API, then direct DocumentApp read, then file copy, then raw blob parsing. This ensures maximum compatibility with different file formats submitted by candidates.</p>
+      <p>The AI prompt is carefully structured to always return a <strong>strict JSON object</strong> with a match score (0–100), matched skills, missing skills, experience level, strengths, concerns, recommendation, and a summary. This structured output makes it trivial to store, sort, and display results.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 3: TECH STACK ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">3</div>
+      <div class="section-title">Technology Stack</div>
+    </div>
+
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-layer">Backend</div>
+        <div class="stack-name">Google Apps Script</div>
+        <div class="stack-detail">JavaScript runtime hosted by Google. Handles form triggers, Drive access, Sheets read/write, and web app serving.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-layer">AI Engine</div>
+        <div class="stack-name">Groq + Llama 3.1</div>
+        <div class="stack-detail">Free inference API. Uses llama-3.1-8b-instant model with JSON response mode for structured output.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-layer">Database</div>
+        <div class="stack-name">Google Sheets</div>
+        <div class="stack-detail">Three sheets: Candidates (form responses), Job Descriptions (JD library), Analysis Results (AI output).</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-layer">File Storage</div>
+        <div class="stack-name">Google Drive</div>
+        <div class="stack-detail">Candidates upload resume files to Drive and share the link in the form. System extracts text using Drive/Docs API.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-layer">Frontend</div>
+        <div class="stack-name">HTML / CSS / JS</div>
+        <div class="stack-detail">Single-file index.html served by Apps Script doGet(). Uses google.script.run for backend calls. Auto-refreshes every 15s.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-layer">Notifications</div>
+        <div class="stack-name">Gmail via MailApp</div>
+        <div class="stack-detail">Automatic email alert sent to the script owner when a candidate scores 80% or above.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 4: KEY FEATURES ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">4</div>
+      <div class="section-title">Key Features</div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-cell">
+        <div class="feature-name">🎯 AI Match Scoring</div>
+        <div class="feature-desc">Each resume scored 0–100 against the selected job description using Llama 3.1. Score is colour-coded: green (80+), amber (60–79), red (below 60).</div>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-name">⚡ Auto-Trigger Processing</div>
+        <div class="feature-desc">onFormSubmit trigger fires instantly on every new form submission. No manual action needed from HR.</div>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-name">📋 Multi-JD Support</div>
+        <div class="feature-desc">Supports multiple job descriptions stored in the JD sheet. Candidates choose which role they're applying for at form submission.</div>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-name">🔴 Live Dashboard</div>
+        <div class="feature-desc">Web app dashboard auto-refreshes every 15 seconds. Shows ranked candidates with expandable detail cards, search, and score filters.</div>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-name">📧 High-Match Alerts</div>
+        <div class="feature-desc">Automatic email notification when a candidate scores 80%+. Includes name, score, JD, recommendation, and AI summary.</div>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-name">🔁 4-Method Resume Read</div>
+        <div class="feature-desc">Tries 4 different methods to extract resume text — Google Doc export, DocumentApp, file copy, raw blob — ensuring maximum compatibility.</div>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-name">🔍 Search & Filter</div>
+        <div class="feature-desc">Search by name, email, or skill. Filter by score range (high/mid/low) or recommendation category from the sidebar.</div>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-name">🛡️ Error Resilience</div>
+        <div class="feature-desc">Rate limit retry logic, graceful fallbacks for resume extraction, and visible error states on both the sheet and dashboard.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 5: HOW TANISHQ BUILT IT ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">5</div>
+      <div class="section-title">How Tanishq Built It</div>
+    </div>
+
+    <div class="builder-card">
+      <div class="builder-avatar">T</div>
+      <div>
+        <div class="builder-name">Tanishq</div>
+        <div class="builder-role">Built ResPar end-to-end — backend automation, AI integration, and the live dashboard — using Google Apps Script as the sole infrastructure layer, keeping the entire system free to run.</div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:1.5rem;">
+      <p>The system was built in several stages. First, the <strong>Google Sheets structure</strong> was set up with three sheets: Candidates (linked to a Google Form), Job Descriptions (editable JD library), and Analysis Results (where AI output is written).</p>
+      <p>Next, the <strong>backend automation</strong> was written in Apps Script. The core loop is: read form row → extract resume text from Drive → call Groq AI → parse JSON response → write results to sheet → send email if high score. The resume extraction required a 4-method fallback chain to handle different Drive file types reliably.</p>
+      <p>The <strong>Groq AI integration</strong> was set up using the OpenAI-compatible API endpoint. The prompt was designed to always return a strict JSON object, using Groq's <code>response_format: json_object</code> parameter to enforce this. The API key is stored securely in Script Properties, not hardcoded.</p>
+      <p>Finally, the <strong>frontend dashboard</strong> was built as a single HTML file served by Apps Script's <code>doGet()</code> function. It uses <code>google.script.run</code> to call backend functions directly from the browser, with a 15-second auto-refresh loop and toast notifications for live updates.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 6: SHEET STRUCTURE ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">6</div>
+      <div class="section-title">Spreadsheet Structure</div>
+    </div>
+
+    <div class="prose">
+      <p>The Google Spreadsheet has <strong>3 sheets</strong>. Here's what each one contains:</p>
+    </div>
+
+    <div class="steps" style="margin-top:1.25rem;">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-heading">Candidates</div>
+          <div class="step-body">Linked to Google Form. Columns: Timestamp, Name, Email, Resume Link (Google Drive URL), JD Name (e.g. JD1/JD2), Status (blank → PROCESSING → DONE/ERROR). This is the input sheet — do not edit manually.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-heading">Job Descriptions</div>
+          <div class="step-body">Two columns: JD Name (e.g. JD1, JD2, JD3) and Job Description (full text of the role requirements). Add new rows here to support new positions. The candidate selects which JD to be scored against at form submission.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-heading">Analysis Results</div>
+          <div class="step-body">Written automatically by the backend. Columns: Timestamp, Name, Email, JD Used, Match Score (colour-coded), Skills Matched, Skills Missing, Experience Level, Strengths, Concerns, Recommendation, Summary. This feeds the dashboard.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.25rem;">
+      <a class="link-card lime" href="https://docs.google.com/spreadsheets/d/1c7_ONIkRK--ne5VCIHNYfoqpr9TNWonuutLAfd173vs/edit?usp=sharing" target="_blank" style="display:inline-flex; max-width:400px;">
+        <div class="link-icon lime">📊</div>
+        <div>
+          <div class="link-title">Open Google Spreadsheet</div>
+          <div class="link-url">1c7_ONIkRK--ne5VCIHNYfoqpr9TNWonuutLAfd173vs</div>
+        </div>
+        <div class="link-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 7: HOW TO TEST ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">7</div>
+      <div class="section-title">How to Test the System</div>
+    </div>
+
+    <div class="prose">
+      <p>Follow these steps to do a complete end-to-end test of ResPar:</p>
+    </div>
+
+    <div class="steps">
+      <div class="step-row done">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-heading">Verify Setup</div>
+          <div class="step-body">In Apps Script editor, run <code>healthCheck()</code>. Confirm SPREADSHEET_ID and GROQ_API_KEY both show ✅ in the execution log.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-heading">Prepare a Test Resume</div>
+          <div class="step-body">Create a Google Doc with some sample resume text (name, skills, experience). Make sure it's set to "Anyone with the link can view". Copy the sharing URL.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-heading">Submit the Google Form</div>
+          <div class="step-body">Open the Google Form linked to the Candidates sheet. Fill in: Name, Email, paste the resume Drive link, and select a JD (JD1, JD2, or JD3). Submit.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-heading">Watch the Candidates Sheet</div>
+          <div class="step-body">Open the Candidates sheet. Within a few seconds the Status column should change from blank → PROCESSING... → DONE. If it shows ERROR, check Apps Script execution logs.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-heading">Check Analysis Results Sheet</div>
+          <div class="step-body">Switch to the Analysis Results sheet. A new row should appear with the AI score, matched skills, missing skills, recommendation, and summary. The score cell will be colour-coded.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-heading">Open the Dashboard</div>
+          <div class="step-body">Go to Deploy → Manage Deployments → copy the Web App URL → open in browser. The candidate should appear with their score ring, skills, and expandable detail card. Click the card to expand strengths, concerns, and missing skills.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <div class="step-heading">Test Manual Processing</div>
+          <div class="step-body">To reprocess all pending rows manually (e.g. after setup), run <code>processAllPending()</code> from the Apps Script editor. Useful if the form trigger wasn't set up before submissions came in.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:1.5rem;">
+      <strong>Tip:</strong> If a candidate scores 80% or higher, you'll also receive an automatic email alert with their name, score, recommendation, and AI summary. Check your inbox after submitting a strong resume.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 8: BACKEND KEY FUNCTIONS ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">8</div>
+      <div class="section-title">Backend Key Functions Reference</div>
+    </div>
+
+    <div class="steps">
+      <div class="step-row">
+        <div class="step-num" style="font-size:0.5rem;">GS</div>
+        <div class="step-content">
+          <div class="step-heading">setupResPar()</div>
+          <div class="step-body">Run once after deployment. Saves SPREADSHEET_ID and GROQ_API_KEY to Script Properties. Creates the Analysis Results sheet if missing.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num" style="font-size:0.5rem;">GS</div>
+        <div class="step-content">
+          <div class="step-heading">onFormSubmit(e)</div>
+          <div class="step-body">Trigger function. Fires on every Google Form submission. Waits 3 seconds then calls processCandidate() for the new row.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num" style="font-size:0.5rem;">GS</div>
+        <div class="step-content">
+          <div class="step-heading">processCandidate(rowNumber)</div>
+          <div class="step-body">Main processing function. Reads candidate row, extracts resume, calls Groq AI, saves results, updates status to DONE or ERROR.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num" style="font-size:0.5rem;">GS</div>
+        <div class="step-content">
+          <div class="step-heading">analyzeWithGroq(resumeText, jdText, candidate)</div>
+          <div class="step-body">Calls Groq API with structured prompt. Returns parsed JSON with matchScore, skillsMatched, skillsMissing, experienceLevel, strengths, concerns, recommendation, summary.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num" style="font-size:0.5rem;">GS</div>
+        <div class="step-content">
+          <div class="step-heading">getAllResults()</div>
+          <div class="step-body">Called by the dashboard UI via google.script.run. Returns all rows from Analysis Results sheet as an array of objects keyed by column header.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num" style="font-size:0.5rem;">GS</div>
+        <div class="step-content">
+          <div class="step-heading">processAllPending()</div>
+          <div class="step-body">Manual batch function. Loops through all Candidates rows and processes any with blank or ERROR status. Useful for initial bulk processing.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num" style="font-size:0.5rem;">GS</div>
+        <div class="step-content">
+          <div class="step-heading">healthCheck()</div>
+          <div class="step-body">Debug helper. Logs SPREADSHEET_ID, GROQ_API_KEY status, sheet names, and row counts. Run this first if anything seems broken.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 9: LIMITATIONS ── -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">9</div>
+      <div class="section-title">Known Limitations</div>
+    </div>
+    <div class="prose">
+      <p><strong>Resume format:</strong> Best results with Google Docs resumes. PDF extraction is limited — the blob method often produces garbled text from PDFs. For best accuracy, ask candidates to submit Google Doc links.</p>
+      <p><strong>Groq rate limits:</strong> Free tier allows 14,400 requests/day and ~30 requests/minute. High volume bursts may hit rate limits. The system retries once after a 429 error but doesn't queue.</p>
+      <p><strong>Apps Script execution time:</strong> Maximum 6 minutes per execution. Processing a single candidate typically takes 5–15 seconds. Batch processing many candidates at once may time out.</p>
+      <p><strong>Concurrent submissions:</strong> If multiple forms are submitted simultaneously, triggers may overlap. The PROCESSING status check prevents double-processing in most cases.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <!-- SECTION 10: ROADMAP -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">10</div>
+      <div class="section-title">Roadmap &mdash; What Could Be Added</div>
+    </div>
+    <div class="prose">
+      <p>Two features have been identified as strong candidates for a future version of ResPar:</p>
+      <p><strong>Interview Question Generator</strong> &mdash; for each candidate, automatically generate tailored interview questions based on their skill gaps, strengths, and the JD they applied for. These would appear directly on the candidate card in the dashboard.</p>
+      <p><strong>Candidate Comparison View</strong> &mdash; select any two candidates and compare them side-by-side with a visual score and skills breakdown, helping recruiters make faster shortlisting decisions.</p>
+      <p>Both would work entirely with data already in the system &mdash; no new sheets, forms, or infrastructure needed.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
